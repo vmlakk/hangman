@@ -23,7 +23,7 @@ object Game {
 
             val inputLetter = GameInput.input("Введите букву или + для подсказки: ")
             if (inputLetter == null) {
-                println("Неверный ввод! Введите только букву!")
+                println("Неверный ввод! Введите только русскую букву!")
                 continue
             }
             if(inputLetter == '+') {
@@ -81,7 +81,8 @@ object Game {
     private object GameInput {
         fun input(message: String?): Char? {
             if (message != null) print(message)
-            return readln().singleOrNull()?.lowercaseChar()
+            var input = readln().singleOrNull()?.lowercaseChar()
+            return if (Regex("[а-я+]").matches(input.toString())) input else null
         }
     }
 }
