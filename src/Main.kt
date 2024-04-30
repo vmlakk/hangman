@@ -1,5 +1,5 @@
 fun main() {
-    println("Hello World!")
+    Game.play()
 }
 
 /* Для игры нужно:
