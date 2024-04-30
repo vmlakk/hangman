@@ -14,13 +14,16 @@ object Game {
         val randomWord = getRandomWord().lowercase(Locale.getDefault())
 
         while (!HangmanStages.isFail(mistakes) && getMaskedWord(randomWord) != randomWord) {
-            mistakes = 0
             println(HangmanStages.getHangman(mistakes))
             println(getMaskedWord(randomWord))
 
-            val inputLetter = GameInput.input("Введите букву: ")
+            val inputLetter = GameInput.input("Введите букву или + для подсказки: ")
             if (inputLetter == null) {
                 println("Неверный ввод! Введите только букву!")
+                continue
+            }
+            if(inputLetter == '+') {
+                println("Подсказка - в это слове есть буква ${getAdvice(randomWord)}")
                 continue
             }
             if (correctLetters.contains(inputLetter)) {
@@ -50,6 +53,11 @@ object Game {
 
     private fun getMaskedWord(word: String): String {
         return word.map { if (correctLetters.contains(it)) it else '_' }.joinToString("")
+    }
+
+    private fun getAdvice(word: String) : Char {
+        val maskedWord = getMaskedWord(word)
+        return word.zip(maskedWord).first { it.first != it.second }.first
     }
 
     private object GameInput {
