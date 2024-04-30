@@ -1,14 +1,20 @@
 import java.io.File
 import java.util.*
+import kotlin.time.DurationUnit
+import kotlin.time.TimeSource
 
 object Game {
     private var mistakes = 0
     private val correctLetters = mutableSetOf<Char>()
 
     fun play() {
+        val timeSource = TimeSource.Monotonic
+        val startGameTimeMark = timeSource.markNow()
+
         val randomWord = getRandomWord().lowercase(Locale.getDefault())
 
         while (!HangmanStages.isFail(mistakes) && getMaskedWord(randomWord) != randomWord) {
+            mistakes = 0
             println(HangmanStages.getHangman(mistakes))
             println(getMaskedWord(randomWord))
 
@@ -30,8 +36,10 @@ object Game {
             }
         }
 
-
+        val endGameTimeMark = timeSource.markNow()
+        val playTime = endGameTimeMark - startGameTimeMark
         println(if (HangmanStages.isFail(mistakes)) "Вы проиграли!" else "Вы выиграли! поздравляем!")
+        println("Ваша игра длилась ${playTime.inWholeMinutes} минут и ${playTime.toLong(DurationUnit.SECONDS) % 60} секунд")
     }
 
     private fun getRandomWord(): String {
