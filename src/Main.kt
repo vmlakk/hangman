@@ -1,5 +1,17 @@
 fun main() {
-    Game.play()
+    while (true) {
+        print("Выберите режим игры\n1 - Обычная игра\n2 - Бесконечная игра\n")
+        val choice = readln().toIntOrNull()
+        if (choice == 1) {
+            Game.play()
+            break
+        } else if (choice == 2) {
+            Game.playEndless()
+            break
+        } else {
+            println("Неверный выбор, попробуйте еще раз")
+        }
+    }
 }
 
 /* Для игры нужно:

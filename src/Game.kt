@@ -39,6 +39,19 @@ object Game {
         println(if (HangmanStages.isFail(mistakes)) "Вы проиграли!" else "Вы выиграли! поздравляем!")
     }
 
+    fun playEndless() {
+        while(true) {
+            play()
+            resetGame()
+        }
+    }
+
+    private fun resetGame() {
+        mistakes = 0
+        correctLetters.clear()
+        wrongLetters.clear()
+    }
+
     private fun getRandomWord(): String {
         val file = File("assets/wordlist.txt")
         val shuffledWordList = file.readLines().shuffled()
