@@ -6,6 +6,7 @@ import kotlin.time.TimeSource
 object Game {
     private var mistakes = 0
     private val correctLetters = mutableSetOf<Char>()
+    private val wrongLetters = mutableSetOf<Char>()
 
     fun play() {
         val timeSource = TimeSource.Monotonic
@@ -16,6 +17,9 @@ object Game {
         while (!HangmanStages.isFail(mistakes) && getMaskedWord(randomWord) != randomWord) {
             println(HangmanStages.getHangman(mistakes))
             println(getMaskedWord(randomWord))
+            if (wrongLetters.isNotEmpty()) {
+                println("Неверные буквы: $wrongLetters")
+            }
 
             val inputLetter = GameInput.input("Введите букву или + для подсказки: ")
             if (inputLetter == null) {
@@ -26,7 +30,7 @@ object Game {
                 println("Подсказка - в это слове есть буква ${getAdvice(randomWord)}")
                 continue
             }
-            if (correctLetters.contains(inputLetter)) {
+            if (correctLetters.contains(inputLetter) || wrongLetters.contains(inputLetter)) {
                 println("Эта буква уже была введена, попробуйте еще раз")
                 continue
             }
@@ -35,6 +39,7 @@ object Game {
                 correctLetters.add(inputLetter)
             } else {
                 println("Данной буквы нету в слове!")
+                wrongLetters.add(inputLetter)
                 mistakes++
             }
         }
@@ -43,6 +48,19 @@ object Game {
         val playTime = endGameTimeMark - startGameTimeMark
         println(if (HangmanStages.isFail(mistakes)) "Вы проиграли!" else "Вы выиграли! поздравляем!")
         println("Ваша игра длилась ${playTime.inWholeMinutes} минут и ${playTime.toLong(DurationUnit.SECONDS) % 60} секунд")
+    }
+
+    fun playEndless() {
+        while(true) {
+            play()
+            resetGame()
+        }
+    }
+
+    private fun resetGame() {
+        mistakes = 0
+        correctLetters.clear()
+        wrongLetters.clear()
     }
 
     private fun getRandomWord(): String {
