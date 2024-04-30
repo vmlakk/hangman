@@ -4,6 +4,7 @@ import java.util.*
 object Game {
     private var mistakes = 0
     private val correctLetters = mutableSetOf<Char>()
+    private val wrongLetters = mutableSetOf<Char>()
 
     fun play() {
         val randomWord = getRandomWord().lowercase(Locale.getDefault())
@@ -11,13 +12,16 @@ object Game {
         while (!HangmanStages.isFail(mistakes) && getMaskedWord(randomWord) != randomWord) {
             println(HangmanStages.getHangman(mistakes))
             println(getMaskedWord(randomWord))
+            if (wrongLetters.isNotEmpty()) {
+                println("Неверные буквы: $wrongLetters")
+            }
 
             val inputLetter = GameInput.input("Введите букву: ")
             if (inputLetter == null) {
                 println("Неверный ввод! Введите только букву!")
                 continue
             }
-            if (correctLetters.contains(inputLetter)) {
+            if (correctLetters.contains(inputLetter) || wrongLetters.contains(inputLetter)) {
                 println("Эта буква уже была введена, попробуйте еще раз")
                 continue
             }
@@ -26,6 +30,7 @@ object Game {
                 correctLetters.add(inputLetter)
             } else {
                 println("Данной буквы нету в слове!")
+                wrongLetters.add(inputLetter)
                 mistakes++
             }
         }
