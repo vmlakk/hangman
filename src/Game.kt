@@ -8,11 +8,12 @@ object Game {
     private val correctLetters = mutableSetOf<Char>()
     private val wrongLetters = mutableSetOf<Char>()
 
-    fun play() {
+    fun play(easyMode: Boolean = false) {
         val timeSource = TimeSource.Monotonic
         val startGameTimeMark = timeSource.markNow()
 
         val randomWord = getRandomWord().lowercase(Locale.getDefault())
+        if(easyMode) openHalfLetters(randomWord)
 
         while (!HangmanStages.isFail(mistakes) && getMaskedWord(randomWord) != randomWord) {
             println(HangmanStages.getHangman(mistakes))
@@ -50,9 +51,9 @@ object Game {
         println("Ваша игра длилась ${playTime.inWholeMinutes} минут и ${playTime.toLong(DurationUnit.SECONDS) % 60} секунд")
     }
 
-    fun playEndless() {
+    fun playEndless(easyMode: Boolean = false) {
         while(true) {
-            play()
+            play(easyMode)
             resetGame()
         }
     }
@@ -69,6 +70,19 @@ object Game {
         return shuffledWordList[0]
     }
 
+    private fun openHalfLetters(word: String) {
+        val lettersToOpenCount = word.length / 2
+        var alreadyOpen = 0
+        for (letter in word) {
+            if (correctLetters.contains(letter)) continue
+
+            alreadyOpen += word.count { it == letter }
+            correctLetters.add(letter)
+
+            if (alreadyOpen >= lettersToOpenCount) break
+        }
+    }
+
     private fun getMaskedWord(word: String): String {
         return word.map { if (correctLetters.contains(it)) it else '_' }.joinToString("")
     }
@@ -81,7 +95,7 @@ object Game {
     private object GameInput {
         fun input(message: String?): Char? {
             if (message != null) print(message)
-            var input = readln().singleOrNull()?.lowercaseChar()
+            val input = readln().singleOrNull()?.lowercaseChar()
             return if (Regex("[а-я+]").matches(input.toString())) input else null
         }
     }

@@ -1,15 +1,33 @@
+import kotlin.system.exitProcess
+
 fun main() {
     while (true) {
-        print("Выберите режим игры\n1 - Обычная игра\n2 - Бесконечная игра\n")
+        print(
+            "Выберите режим игры\n" +
+                    "1 - Обычная игра\n" +
+                    "2 - Легкая игра\n" +
+                    "3 - Бесконечная игра\n" +
+                    "4 - Бесконечная легкая игра\n"
+        )
         val choice = readln().toIntOrNull()
-        if (choice == 1) {
-            Game.play()
-            break
-        } else if (choice == 2) {
-            Game.playEndless()
-            break
-        } else {
-            println("Неверный выбор, попробуйте еще раз")
+        when (choice) {
+            1 -> {
+                Game.play()
+                exitProcess(0)
+            }
+            2 -> {
+                Game.play(true)
+                exitProcess(0)
+            }
+            3 -> {
+                Game.playEndless()
+            }
+            4 -> {
+                Game.playEndless(true)
+            }
+            else -> {
+                println("Неверный выбор, попробуйте еще раз")
+            }
         }
     }
 }
