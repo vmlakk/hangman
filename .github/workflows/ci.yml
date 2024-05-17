@@ -29,5 +29,5 @@ jobs:
       - name: Publish documentation
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-          BRANCH: main
+          BRANCH: gh-pages
           FOLDER: build/dokka/html
