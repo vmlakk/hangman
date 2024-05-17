@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.22"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "org.vmlakk"
@@ -17,6 +18,7 @@ tasks.test {
     useJUnitPlatform()
     maxParallelForks = 1
 }
+
 kotlin {
     jvmToolchain(21)
 }

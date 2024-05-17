@@ -21,4 +21,13 @@ jobs:
           distribution: 'temurin'
 
       - name: Run tests
-        run: ./gradlew test
+        run: ./gradlew build
+
+      - name: Generate Dokka documentation
+        run: ./gradlew dokkaHtml
+
+      - name: Publish documentation
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          BRANCH: main
+          FOLDER: build/dokka/html
