@@ -1,0 +1,12 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:org.vmlakk////PointingToDeclaration/hangman/org.vmlakk/index.html
+$dokka.location:org.vmlakk//main/#/PointingToDeclaration/hangman/org.vmlakk/main.html
+$dokka.location:org.vmlakk/Game///PointingToDeclaration/hangman/org.vmlakk/-game/index.html
+$dokka.location:org.vmlakk/Game/play/#kotlin.Boolean#kotlin.Function0[kotlin.String]?/PointingToDeclaration/hangman/org.vmlakk/-game/play.html
+$dokka.location:org.vmlakk/Game/playEndless/#kotlin.Boolean/PointingToDeclaration/hangman/org.vmlakk/-game/play-endless.html
+$dokka.location:org.vmlakk/HangmanStages///PointingToDeclaration/hangman/org.vmlakk/-hangman-stages/index.html
+$dokka.location:org.vmlakk/HangmanStages/getHangman/#kotlin.Int/PointingToDeclaration/hangman/org.vmlakk/-hangman-stages/get-hangman.html
+$dokka.location:org.vmlakk/HangmanStages/isFail/#kotlin.Int/PointingToDeclaration/hangman/org.vmlakk/-hangman-stages/is-fail.html
+org.vmlakk
+
